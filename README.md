@@ -20,3 +20,46 @@ Potentially run manova (whichever statistical test is for 3 or more variables).
 Questions For Tomorrow:
 What do we need to remove from the metadata?
 Can you guide us to make a proposal in R after using QIIME2?
+
+## Oct 15 Team notes
+Goal for next week: figure out specific research aim
+Overall RQ (from first week discussion): 
+Does the composition of a patient's microbiome and prevalence of depression in a patient impact their MS severity? 
+Effects of depression and MSSS on gut microbiome
+Hypothesis to connect all 3:
+Hoping to run PERMANOVA to run all 3
+Alpha and beta diversity
+Severe MS associated to higher level/diverse microbiome and depression
+Or microbiome on depression on MS
+Bessie (NEW RQ IDEA): If you want to connect all 3, do effect of prevalence of depression and MS severity on gut microbiome
+Severe MS (PMS), presence of depression (29)
+Severe MS (PMS), absence of depression (80)
+Less severe MS (RMS), presence of depression (60)
+Less severe MS (RMS), absence of depression (266)
+Healthy, depression (37)
+Healthy, no depression (396)
+*Use the different types of MS (SMS, RRMS, PMS) to determine the severity of MS*
+Known that PMS is more severe than RRMS
+Best to use original paper to find it
+Sample size of above ~10 is okay to use for research
+Rationale of hypothesis (required in proposal): If it does affect gut microbiome, why does it do that
+Worth exploring RF model
+Presence of specific species
+Possibly microbiome diversity
+Can’t predict the general gut microbiome
+If sample size big enough/prevalent for one specific type of MS, can just use that one
+Most common form of MS
+Get sample number (for each of 6 variables above) based on this type of MS
+
+
+
+Proposal 
+What type of analysis and our approach
+How it can contribute to our hypothesis (why this analysis?)
+Not required to do actual analysis, just explain why you chose that one
+Possibly do QIIME2 processing though
+What machinery we’re using
+Need to manipulate metadata
+Numeric → character
+Exclude NAs in depression column
+
