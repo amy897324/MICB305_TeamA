@@ -233,14 +233,23 @@ References: Raavin, Amy, Gerard, Emilia
 
 Everyone contributed equally to this proposal, with tasks distributed based on skills, interest and past knowledge. 
 
+Other scientific articles.
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9355758/ (DEPRESSION ON DIVERSITY)
+
+In the past, it has been determined that the presence of depression can affect the composition of the microbiome. In a study performed by Li et al., the fecal matter of patients with or without depression were analyzed and sequenced. The researchers compared the 16S RNA gene found in bacteria and observed that there was a significant decrease in alpha diversity when comparing patients with depression to patients without depression. Though the exact mechanism is not known, they found that the abundance of certain major species of bacteria in the gut were significantly reduced which suggests that the presence of depression somehow alters the microbiome.
+
+https://www.neurology.org/doi/10.1212/NXI.0000000000200355 (MS on gut diversity)
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10001679/ (got the third link from here)
+https://bmcmicrobiol.biomedcentral.com/articles/10.1186/s12866-019-1685-2 (PPMS alpha increase)
+
+The relationship between the severity of MS and diversity within the gut microbiome is not well known, but there are differences in multiple sclerosis severity scores between different types of MS. Previous studies have identified that certain types of MS are more likely to reduce the diversity of the gut microbiome while others are more likely to increase diversity. Gupta et al., performed a study where they collected fecal samples of MS patients and found that in RRMS, there was a significant decrease in alpha diversity and a significant difference in beta diversity. In a study on PPMS and the gut microbiome by Kozhieva et al., the researchers found that the alpha diversity in participants with PPMS was significantly higher than participants without PPMS.
 
 
+Article Depression Different Bacteria
 
-
-
-
-
-
+Article says at the species level there was a significant difference depression had highest of Coprococcus catus while this bacteria was significantly reduced Bacteroides barnesiae
+https://pmc.ncbi.nlm.nih.gov/articles/PMC9355758/
 
 
 
