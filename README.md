@@ -34,35 +34,34 @@ https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(23)00092-0/fullte
 How does the microbiome of patients as well as the different allergies they have impact the prevalence and severity of MS? 
 
 ## Oct 8
-With MS dataset, only problem is not many patients with clinical depression (can still use, sufficient)
-Can random sample due to disproportionate amount of people with not
-Divide by 2 because 2 samples for each person
-Post-partum depression = different mechanism 
-Use as confounding variable 
-Duplicate data = 2 swabs taken
-Filtering beforehand
-Remove duplicates
-Will still take a while
-So plan ahead
-Have someone import it beforehand
-Do it in beginning of week to avoid slow
-To only obtain necessary variables
-Will take too long if too big
-After filtering, process what’s left
-All processing in QIIME2
-Clean metadata to wanted variables 
-Summarize
-Controls
-Ask Bessie next week about it
-Look at severity of MS for those individuals 
-MSSS
-Data analysis in R
-Good specific question
-Good correlation of gut-brain axis, depression, and MS
-Keep them updated of how long processing takes
-Update agenda and meeting notes on Github
-Proposal due on oct 26
-Have some of it analysed 
+- With MS dataset, only problem is not many patients with clinical depression (can still use, sufficient)
+      - Can random sample due to disproportionate amount of people with not
+      - Divide by 2 because 2 samples for each person
+- Post-partum depression = different mechanism 
+      - Use as confounding variable 
+- Duplicate data = 2 swabs taken
+- Filtering beforehand
+- Remove duplicates
+- Will still take a while
+- So plan ahead
+- Have someone import it beforehand
+- Do it in beginning of week to avoid slow
+- To only obtain necessary variables
+- Will take too long if too big
+- After filtering, process what’s left
+- All processing in QIIME2
+- Clean metadata to wanted variables 
+- Summarize
+- Controls
+- Ask Bessie next week about it
+- Look at severity of MS for those individuals 
+- Data analysis in R
+- Good specific question
+- Good correlation of gut-brain axis, depression, and MS
+- Keep them updated of how long processing takes
+- Update agenda and meeting notes on Github
+- Proposal due on oct 26
+- Have some of it analysed 
 
 
 ## Oct 15
