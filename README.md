@@ -1,6 +1,69 @@
 # MICB305_TeamA
 ## Oct 1
 Does the composition of a patient's microbiome and prevalence of depression in a patient impact their MS severity? 
+New Business
+Team organization:
+Weekly rotation of note takers/meeting leaders
+All read.me files and scripts must be uploaded to shared GitHub repository MICB305_TeamA
+
+Examine UJEMI database for suitable papers:
+Sweet spot of specific areas in the metadata that have yet to be explored with some evidence supporting hypothesis.
+Explore multiple metadata sets to find variables
+
+Literature review:
+Upstream vs. downstream hypothesis
+Indirect observations
+
+To-do before next week
+Search metadata and form a short list of datasets of interest
+
+Ideas for MS metadata
+The Microbiome composition differences in patients with/without varying types of depression(Gut brain axis) 
+
+Does the composition of a patient's microbiome and prevalence of depression in a patient impact their MS severity? 
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC3181849/ (ask prof)
+https://pubmed.ncbi.nlm.nih.gov/35508109/
+https://psychiatryonline.org/doi/10.1176/jnp.23.3.jnp261
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10146621/
+https://pubmed.ncbi.nlm.nih.gov/36113426/
+https://pubmed.ncbi.nlm.nih.gov/30310254/
+https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(23)00092-0/fulltext
+
+
+How does the microbiome of patients as well as the different allergies they have impact the prevalence and severity of MS? 
+
+## Oct 8
+With MS dataset, only problem is not many patients with clinical depression (can still use, sufficient)
+Can random sample due to disproportionate amount of people with not
+Divide by 2 because 2 samples for each person
+Post-partum depression = different mechanism 
+Use as confounding variable 
+Duplicate data = 2 swabs taken
+Filtering beforehand
+Remove duplicates
+Will still take a while
+So plan ahead
+Have someone import it beforehand
+Do it in beginning of week to avoid slow
+To only obtain necessary variables
+Will take too long if too big
+After filtering, process what’s left
+All processing in QIIME2
+Clean metadata to wanted variables 
+Summarize
+Controls
+Ask Bessie next week about it
+Look at severity of MS for those individuals 
+MSSS
+Data analysis in R
+Good specific question
+Good correlation of gut-brain axis, depression, and MS
+Keep them updated of how long processing takes
+Update agenda and meeting notes on Github
+Proposal due on oct 26
+Have some of it analysed 
+
 
 ## Oct 15
 Introduction and Background: provides the premise for why/how your dataset was collected in addition to an overview of the studies that have already been conducted on your dataset or relevant to your dataset (consider what you presented for your P2 review oral presentation)
