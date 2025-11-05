@@ -1,6 +1,6 @@
 # MICB305_TeamA
 
-### Nov 5
+# Nov 5
 
 ## Agenda
 - Ask questions about next steps
@@ -14,7 +14,7 @@ Go over presentation slides by Oct 29
 Not everything has to necessarily be done by presentation
 
 
-### Oct 29
+# Oct 29
 
 ## Agenda
 - get more feedback on proposal draft
@@ -24,7 +24,7 @@ Final proposal review
 Cite more
 Reorganize intro
 
-### Oct 22
+# Oct 22
 
 ## Agenda
 - Go through proposal
@@ -50,7 +50,7 @@ Find many studies supporting points for introductions, depression and MS = bad, 
 Expand more on gap
 What’s unknown
 
-### Oct 15
+# Oct 15
 
 ## Agenda
 Introduction and Background: provides the premise for why/how your dataset was collected in addition to an overview of the studies that have already been conducted on your dataset or relevant to your dataset (consider what you presented for your P2 review oral presentation)
@@ -115,7 +115,7 @@ Need to manipulate metadata
 Numeric → character
 Exclude NAs in depression column
 
-### Oct 8
+# Oct 8
 
 ## Agenda
 - Search metadata and form a short list of datasets of interest
@@ -154,7 +154,7 @@ Exclude NAs in depression column
 - Have some of it analysed 
 
 
-### Oct 1
+# Oct 1
 
 ## Agenda
 - Look at datasets
@@ -195,6 +195,6 @@ https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(23)00092-0/fullte
 
 How does the microbiome of patients as well as the different allergies they have impact the prevalence and severity of MS? 
 
-### References
+References
 
 
