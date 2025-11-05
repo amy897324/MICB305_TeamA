@@ -23,6 +23,7 @@ Not everything has to necessarily be done by presentation
 Final proposal review
 Cite more
 Reorganize intro
+https://docs.google.com/document/d/1dazcS31jXVaTHwVo_dbG_dvDyYjQysJTgvbyOvpcPVw/edit?tab=t.iove6sknk98q#heading=h.4q66811raij
 
 # Oct 22
 
