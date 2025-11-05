@@ -1,7 +1,58 @@
 # MICB305_TeamA
 
+### Nov 5
 
-## Oct 15
+## Agenda
+- Ask questions about next steps
+- presentation
+- Assignment 6
+
+## Meeting Notes
+By next meeting, complete some analysis done for some aims
+ By Oct 19, have most aims analysed
+Go over presentation slides by Oct 29
+Not everything has to necessarily be done by presentation
+
+
+### Oct 29
+
+## Agenda
+- get more feedback on proposal draft
+
+## Meeting Notes
+Final proposal review
+Cite more
+Reorganize intro
+
+### Oct 22
+
+## Agenda
+- Go through proposal
+- get lots of feedback
+- make sure RQ is good
+- check analysis
+
+## Meeting Notes
+Add first 3 meeting notes onto github
+Move proposal to a different file on github
+
+Title: don't sound conclusive or too broad, can start with an ING verb. 
+introduction and background: purpose is to say what we know and what we are trying to find. Avoid explaining too much about MS and depression itself, give a brief overview. 
+Look for some things a bit broader for introduction.
+What we want to write about is more about gut microbiome
+Targeting our actual research question
+Link depression with gut microbiome
+Link MS with gut microbiome
+In rubric, not much need to describe the dataset we’re going to be using
+At max, only 1 paragraph
+Start with significance from beginning
+Find many studies supporting points for introductions, depression and MS = bad, how is affecting gut microbiome based on what studies? 
+Expand more on gap
+What’s unknown
+
+### Oct 15
+
+## Agenda
 Introduction and Background: provides the premise for why/how your dataset was collected in addition to an overview of the studies that have already been conducted on your dataset or relevant to your dataset (consider what you presented for your P2 review oral presentation)
 
 Hypothesis: How does the microbiome of patients as well as the different allergies they have impact the prevalence and severity of MS? We believe that there is a correlation between the microbiome, the MSS severity score, and the different categories of depression listed within the data. In the literature listed below, depression and MS share some biological causative factors (HPA axis for example which may have potential connections to the human microbiome). https://pmc.ncbi.nlm.nih.gov/articles/PMC3181849/
@@ -20,7 +71,7 @@ Questions For Tomorrow:
 What do we need to remove from the metadata?
 Can you guide us to make a proposal in R after using QIIME2?
 
-## Oct 15 Team notes
+## Meeting Notes
 Goal for next week: figure out specific research aim
 
 Overall RQ (from first week discussion): 
@@ -64,7 +115,15 @@ Need to manipulate metadata
 Numeric → character
 Exclude NAs in depression column
 
-## Oct 8
+### Oct 8
+
+## Agenda
+- Search metadata and form a short list of datasets of interest
+- Talk about our potential RQ
+- think thoroughly about hypothesis
+- what types of analysis would work best for our question
+
+## Meeting Notes
 - With MS dataset, only problem is not many patients with clinical depression (can still use, sufficient)
       - Can random sample due to disproportionate amount of people with not
       - Divide by 2 because 2 samples for each person
@@ -95,7 +154,14 @@ Exclude NAs in depression column
 - Have some of it analysed 
 
 
-## Oct 1
+### Oct 1
+
+## Agenda
+- Look at datasets
+- pick which peaks interest
+- think of sample RQ
+
+## Meeting Notes
 Does the composition of a patient's microbiome and prevalence of depression in a patient impact their MS severity? 
 New Business
 Team organization:
