@@ -7,6 +7,26 @@
 - go over next steps and what to get done by next week and future with our project
 
 ## Meeting Notes
+Proposal revision
+- Title is too confirmed as if we’ve accomplished the research already
+   - Moreso for final manuscript
+   - Don’t use “modulate”
+   - Investigating the effect of…
+- Language is not “scientific” enough
+   - Avoid using words like “interesting”, etc
+   - Expand on what exactly other papers found rather than stating “there was a difference”
+- Focus revision based on what TA said and changing those for what’s due on sunday
+- Hypothesis
+   - If we want to keep the claims in our hypothesis, we have to explain our perspective of it
+        - Explained in further sections so change order of paragraphs
+- Aims
+   - Misinformation about what functional analysis reveals
+        - As well as how to approach aim 3 overall
+        - Broad statements/claims
+        - Does it tell you pathway abundance?
+   - Explain more on why we chose diversity metrics and what it reveals for us
+- Overall add more descriptions
+
 
 # Nov 5
 
