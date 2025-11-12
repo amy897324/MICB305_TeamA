@@ -1,5 +1,13 @@
 # MICB305_TeamA
 
+# Nov 19
+
+## Agenda
+- go over aims analysis for all 3
+- possibly go over fixed revisions
+
+## Meeting Notes
+
 # Nov 12
 
 ## Agenda
@@ -26,7 +34,9 @@ Proposal revision
         - Does it tell you pathway abundance?
    - Explain more on why we chose diversity metrics and what it reveals for us
 - Overall add more descriptions
-
+- cause and effect
+- fix references
+  
 
 # Nov 5
 
