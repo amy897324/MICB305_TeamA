@@ -1,5 +1,13 @@
 # MICB305_TeamA
 
+# Nov 12
+
+## Agenda
+- Get revisal feedback from Avril and Bessie
+- go over next steps and what to get done by next week and future with our project
+
+## Meeting Notes
+
 # Nov 5
 
 ## Agenda
