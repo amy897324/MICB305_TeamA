@@ -5,26 +5,27 @@ date: "2025-11-17"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Load necessary packages to perform core microbiome, indicator taxa, and ANCOM-BC2 analyses
+
+Seeing as we have already performed analyses using these packages in class, this step differs from the Aim Specific Approach in the Project Proposal, which was to install the packages below.
+
+```{r packages, echo = FALSE}
+
+library(tidyverse)
+library(phyloseq)
+library(ggplot2)
+library(vegan)
+library(ggVennDiagram)
+library(microbiome)
+library(indicspecies)
+library(ANCOMBC)
 ```
 
-## R Markdown
+# Load phyloseq and name as object
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+As the phyloseq object is required for multiple aims, it was first created separately and added to the GitHub repository. This steps loads the phyloseq object and assigns it a name, rather than creating it as outlined in the Project Proposal.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r phyloseq}
 
-```{r cars}
-summary(cars)
+ps <- readRDS("../phyloseq_taxonomy.rds")
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
