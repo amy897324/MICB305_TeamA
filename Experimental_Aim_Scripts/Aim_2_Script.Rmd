@@ -1,6 +1,6 @@
 ---
 title: "Aim_2_Script"
-author: "Emilia Vachon"
+author: "Gerard Garcia and Emilia Vachon"
 date: "2025-11-17"
 output: html_document
 ---
@@ -28,4 +28,59 @@ As the phyloseq object is required for multiple aims, it was first created separ
 ```{r phyloseq}
 
 ps <- readRDS("../phyloseq_taxonomy.rds")
+```
+
+# Subset the phyloseq data
+
+```{r}
+
+ps_abundance <- transform_sample_counts(ps, fun = function(x) x/sum(x))
+
+
+rrms_nd <- subset_samples(ps_abundance, disease_type == "RRMS" & depression == 0)
+
+rrms_d <- subset_samples(ps_abundance, disease_type == "RRMS" & depression == 1)
+
+pms_nd <- subset_samples(ps_abundance, disease_type == "PMS" & depression == 0)
+
+pms_d <- subset_samples(ps_abundance, disease_type == "PMS" & depression == 0)
+
+control_nd <- subset_samples(ps_abundance, disease_type == "Control" & depression == 0)
+
+control_d <- subset_samples(ps_abundance, disease_type == "Control" & depression == 1)
+```
+
+# Perform core microbiome assessment for each subsetted group
+
+```{r}
+rrms_nd_core <- core_members(rrms_nd, detection = 0, prevalence = 0.8)
+
+rrms_d_core <- core_members(rrms_d, detection = 0, prevalence = 0.8)
+
+pms_nd_core <- core_members(pms_nd, detection = 0, prevalence = 0.8)
+
+pms_d_core <- core_members(pms_d, detection = 0, prevalence = 0.8)
+
+control_nd_core <- core_members(control_nd, detection = 0, prevalence = 0.8)
+
+control_d_core <- core_members(control_d, detection = 0, prevalence = 0.8)
+```
+
+# Visualize core microbiomes based on MS severity
+
+```{r}
+pms_core_diagram <- ggVennDiagram(x = list(pms_nd_core, pms_d_core, control_nd_core, control_d_core), set_size = 3,
+              category.names = c("PMS", "PMS and depression", "Control", "Control and depression"))
+
+pms_core_diagram
+
+rrms_core_diagram <- ggVennDiagram(x = list(rrms_nd_core, rrms_d_core, control_nd_core, control_d_core), set_size = 3,
+              category.names = c("RRMS", "RRMS and depression", "Control", "Control and depression"))
+
+rrms_core_diagram
+
+rrms_only_core_diagram <- ggVennDiagram(x = list(rrms_nd_core, rrms_d_core), set_size = 3,
+              category.names = c("RRMS", "RRMS and depression"))
+
+rrms_only_core_diagram
 ```
