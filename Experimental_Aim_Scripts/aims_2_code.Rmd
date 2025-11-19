@@ -27,7 +27,7 @@ library(ANCOMBC)
 
 
 ```{r}
-phyloseq <- readRDS("phyloseq_taxonomy.rds")
+phyloseq <- readRDS("../phyloseq_taxonomy.rds")
 
 phyloseq_abundance <- transform_sample_counts(phyloseq, fun = function(x) x/sum(x))
 
