@@ -3,8 +3,8 @@
 # Nov 19
 
 ## Agenda
-- go over aims analysis for all 3
-- possibly go over fixed revisions
+- go over aims analysis for all 3.
+- possibly go over fixed revisions.
 
 ## Meeting Notes
 
