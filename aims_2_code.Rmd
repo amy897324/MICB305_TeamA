@@ -1,0 +1,96 @@
+---
+title: "Aims_2_code"
+output: html_document
+date: "2025-11-19"
+---
+
+```{r}
+install.packages("tidyverse")
+install.packages("phyloseq")
+install.packages("vegan")
+install.packages("ggplot2")
+install.packages("ggVennDiagram")
+install.packages("microbiome")
+install.packages("indicspecies")
+install.packages("ANCOMBC")
+
+
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+library(ggplot2)
+library(ggVennDiagram)
+library(microbiome)
+library(indicspecies)
+library(ANCOMBC)
+```
+
+
+```{r}
+phyloseq <- readRDS("phyloseq_taxonomy.rds")
+
+phyloseq_abundance <- transform_sample_counts(phyloseq, fun = function(x) x/sum(x))
+
+data <- phyloseq_abundance@sam_data
+
+
+rrms_no_depression <- subset_samples(phyloseq_abundance, disease_type == "RRMS")
+subset <- rrms_no_depression@sam_data |>
+  data.frame() |>
+  filter(depression == 0)
+rrms_no_depression@sam_data <- sample_data(subset)
+
+rrms_depression <- subset_samples(phyloseq_abundance, disease_type == "RRMS")
+subset1 <- rrms_depression@sam_data |>
+  data.frame() |>
+  filter(depression == 1)
+rrms_depression@sam_data <- sample_data(subset1)
+
+pms_no_depression <- subset_samples(phyloseq_abundance, disease_type == "PMS")
+subset3 <- pms_no_depression@sam_data |>
+  data.frame() |>
+  filter(depression == 0)
+pms_no_depression@sam_data <- sample_data(subset3)
+
+pms_depression <- subset_samples(phyloseq_abundance, disease_type == "PMS")
+subset4 <- pms_depression@sam_data |>
+  data.frame() |>
+  filter(depression == 1)
+pms_depression@sam_data <- sample_data(subset4)
+
+control_no_depression <- subset_samples(phyloseq_abundance, disease_type == "Control")
+subset5 <- control_no_depression@sam_data |>
+  data.frame() |>
+  filter(depression == 0)
+control_no_depression@sam_data <-sample_data(subset5)
+
+control_depression <- subset_samples(phyloseq_abundance, disease_type == "Control")
+subset6 <- control_depression@sam_data |>
+  data.frame() |>
+  filter(depression == 1)
+control_depression@sam_data <- sample_data(subset6)
+
+rrms_no_depression_core <- core_members(rrms_no_depression, detection = 0, prevalence = 0.8)
+
+rrms_depression_core <- core_members(rrms_depression, detection = 0, prevalence = 0.8)
+
+pms_no_depression_core <- core_members(pms_no_depression, detection = 0, prevalence = 0.8)
+
+pms_depression_core <- core_members(pms_depression, detection = 0, prevalence = 0.8)
+
+control_no_depression_core <- core_members(control_no_depression, detection = 0, prevalence = 0.8)
+
+control_depression_core <- core_members(control_depression, detection = 0, prevalence = 0.8)
+
+```
+
+```{r}
+graph_pms_control <- ggVennDiagram(x = list( pms_no_depression_core, pms_depression_core, control_no_depression_core, control_depression_core), set_size = 3,
+              category.names = c("pms", "pms_depression", "control", "control_depression"))
+print(graph_pms_control)
+
+graph_rrms <- ggVennDiagram(x = list(rrms_no_depression_core, rrms_depression_core), set_size = 3,
+              category.names = c("rrms", "rrms_depression"))
+graph_rrms
+```
+
