@@ -1,0 +1,131 @@
+# Aim 1 Team A 
+## making the phyloseq 
+```{r}
+library(phyloseq)
+library(tidyverse)
+library(vegan)
+library(dplyr)
+library(ggplot2)
+library(picante)
+```
+
+
+```{r}
+taxonomy <- read.delim("taxonomy.tsv", row.names = 1)
+tree <- read_tree("tree.nwk")
+counts <- read.delim("feature-table.tsv", skip = 1, row.names = 1)
+metadata <- read.delim("new_metadata.tsv", row.names = 1)
+
+
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c('Domain','Phylum','Class','Order',
+                    'Family','Genus','Species'),
+           sep=';', fill='right') %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+counts_formatted = counts %>% as.matrix()
+colnames(counts_formatted) <- sub("^X", "", colnames(counts_formatted))
+colnames(counts_formatted) <- gsub("\\.", "-", colnames(counts_formatted))
+
+
+meta_data <- read.delim(
+  "new_metadata.tsv",
+  sep = "\t",
+  header = TRUE,
+  row.names = 1,
+  check.names = FALSE,
+  comment.char = ""
+)
+meta_data <- meta_data[colnames(counts_formatted), ]
+
+
+ps <- phyloseq(
+  sample_data(meta_data),
+  otu_table(counts_formatted, taxa_are_rows = TRUE),
+  tax_table(taxonomy_formatted),
+  tree
+)
+
+saveRDS(ps,'phyloseq_taxonomy.rds')
+```
+
+```{r}
+ps <- readRDS("../phyloseq_taxonomy.rds")
+```
+
+
+## starting with alpha diversity analysis
+```{r}
+set.seed(421)
+psrare = ps %>% rarefy_even_depth(sample.size = 7000, rngseed = 421)
+
+meta_r <- data.frame(sample_data(psrare))
+meta_r$depression <- as.numeric(as.character(meta_r$depression)) # pull metadata to allow for better manipulation
+
+meta_r$group6 <- with(
+  meta_r,
+  case_when(
+    disease_type == "RRMS"    & depression == 1 ~ "RRMS_Depression",
+    disease_type == "RRMS"    & depression == 0 ~ "RRMS_NoDepression",
+    disease_type == "PMS"     & depression == 1 ~ "PMS_Depression",
+    disease_type == "PMS"     & depression == 0 ~ "PMS_NoDepression",
+    disease_type == "Control" & depression == 1 ~ "NoMS_Depression",
+    disease_type == "Control" & depression == 0 ~ "NoMS_NoDepression",
+    TRUE ~ NA_character_
+  ) # making the 6 groups 
+)
+
+meta_r$group6 <- factor(
+  meta_r$group6,
+  levels = c("RRMS_Depression",
+             "RRMS_NoDepression",
+             "PMS_Depression",
+             "PMS_NoDepression",
+             "NoMS_Depression",
+             "NoMS_NoDepression")
+) # adding levels based on how they will show up in graph NO BIOLOGICAL RANKING
+
+sample_data(psrare) <- sample_data(meta_r) # adding this new metadata back to our phyloseq
+```
+
+```{r}
+psrare_noNA <- subset_samples(psrare, !is.na(group6))
+psrare_noNA <- prune_samples(sample_sums(psrare_noNA) > 0, psrare_noNA) # removes NA and empties
+
+otu_mat <- as(otu_table(psrare_noNA), "matrix") # extracting OTU and making sure rows are sample and cols are taxa 
+if (taxa_are_rows(psrare_noNA)) {
+  otu_mat <- t(otu_mat)
+}
+tree_pd <- phy_tree(psrare_noNA) # extracting tree 
+faith_pd <- pd(otu_mat, tree_pd, include.root = TRUE) # caclulating faiths 
+meta_r <- data.frame(sample_data(psrare_noNA))
+meta_r <- meta_r[rownames(faith_pd), , drop = FALSE]
+
+faith_df <- data.frame(
+  sample  = rownames(faith_pd),
+  FaithPD = faith_pd$PD,
+  group6  = meta_r$group6
+) # build final clean table for plotting 
+```
+
+```{r}
+faiths_plot <- ggplot(faith_df, aes(x = group6, y = FaithPD, color = group6)) +
+  geom_boxplot(outlier.shape = NA) +          # boxplot without showing outlier duplicates
+  geom_jitter(width = 0.2, size = 2, alpha = 0.7) +   # your sample dots
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ylab("Faith's Phylogenetic Diversity") +
+  xlab("MS / Depression Group") +
+  scale_color_discrete(name = "Group")        
+
+faiths_plot
+
+# run kruskil on all values, shannons and observed values as well 
+```
+## Running the beta diversity metrics 
+```{r}
+
+```
+
