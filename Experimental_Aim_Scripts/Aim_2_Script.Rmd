@@ -32,7 +32,7 @@ ps <- readRDS("../phyloseq_taxonomy.rds")
 
 # Subset the phyloseq data
 
-```{r}
+```{r subset}
 
 ps_abundance <- transform_sample_counts(ps, fun = function(x) x/sum(x))
 
@@ -52,7 +52,8 @@ control_d <- subset_samples(ps_abundance, disease_type == "Control" & depression
 
 # Perform core microbiome assessment for each subsetted group
 
-```{r}
+```{r core microbiome}
+
 rrms_nd_core <- core_members(rrms_nd, detection = 0, prevalence = 0.8)
 
 rrms_d_core <- core_members(rrms_d, detection = 0, prevalence = 0.8)
@@ -68,7 +69,8 @@ control_d_core <- core_members(control_d, detection = 0, prevalence = 0.8)
 
 # Visualize core microbiomes based on MS severity
 
-```{r}
+```{r visualize}
+
 pms_core_diagram <- ggVennDiagram(x = list(pms_nd_core, pms_d_core, control_nd_core, control_d_core), set_size = 3,
               category.names = c("PMS", "PMS and depression", "Control", "Control and depression"))
 
@@ -83,4 +85,31 @@ rrms_only_core_diagram <- ggVennDiagram(x = list(rrms_nd_core, rrms_d_core), set
               category.names = c("RRMS", "RRMS and depression"))
 
 rrms_only_core_diagram
+```
+
+# Perform indicator species analysis
+
+```{r}
+
+phyloseq_object = subset_samples(ps, depression == 0 | depression == 1) %>%
+  microbiome::transform('compositional')
+
+grouped_data <- data.frame(phyloseq_object@sam_data) %>%
+  mutate(group = case_when(
+    disease_type == "RRMS" & depression == 0 ~ "RRMS",
+    disease_type == "RRMS" & depression == 1 ~ "RRMS Depression",
+    disease_type == "PMS" & depression == 0 ~ "PMS",
+    disease_type == "PMS" & depression == 1 ~ "PMS Depression",
+    disease_type == "Control" & depression == 0 ~ "Control",
+    disease_type == "Control" & depression == 1 ~ "Control Depression"))
+
+phyloseq_object@sam_data <- sample_data(grouped_data)
+
+isa_output = multipatt(t(otu_table(phyloseq_object)), 
+                       cluster = sample_data(phyloseq_object)$group,
+                       control = how(nperm = 999))
+
+statistics = as.data.frame(isa_output$sign)
+
+summary(isa_output, indvalcomp = TRUE)
 ```
