@@ -112,4 +112,10 @@ isa_output = multipatt(t(otu_table(phyloseq_object)),
 statistics = as.data.frame(isa_output$sign)
 
 summary(isa_output, indvalcomp = TRUE)
+
+write.csv(statistics, 'isa_table.csv')
+
+isa_filtered = filter(statistics, stat > 0.5 & p.value < 0.05)
+
+dim(isa_filtered)
 ```
