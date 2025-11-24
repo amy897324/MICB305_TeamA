@@ -1,6 +1,8 @@
 # MICB305_TeamA
 
 # Nov 26
+
+## Agenda
 - go over presentation slides
 - potentially look over aims further
 - questions about oral presentation
