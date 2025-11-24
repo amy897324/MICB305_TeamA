@@ -72,19 +72,28 @@ control_d_core <- core_members(control_d, detection = 0, prevalence = 0.8)
 ```{r visualize}
 
 pms_core_diagram <- ggVennDiagram(x = list(pms_nd_core, pms_d_core, control_nd_core, control_d_core), set_size = 3,
-              category.names = c("PMS", "PMS and depression", "Control", "Control and depression"))
+              category.names = c("PMS", "PMS and depression", "Control", "Control and depression"),
+              label_color = "white")
 
 pms_core_diagram
 
 rrms_core_diagram <- ggVennDiagram(x = list(rrms_nd_core, rrms_d_core, control_nd_core, control_d_core), set_size = 3,
-              category.names = c("RRMS", "RRMS and depression", "Control", "Control and depression"))
+              category.names = c("RRMS", "RRMS and depression", "Control", "Control and depression"),
+              label_color = "white")
 
 rrms_core_diagram
 
 rrms_only_core_diagram <- ggVennDiagram(x = list(rrms_nd_core, rrms_d_core), set_size = 3,
-              category.names = c("RRMS", "RRMS and depression"))
+              category.names = c("RRMS", "RRMS and depression"),
+              label_color = "white")
 
 rrms_only_core_diagram
+
+pms_only_core_diagram <- ggVennDiagram(x = list(pms_nd_core, pms_d_core), set_size = 3,
+              category.names = c("PMS", "PMS and depression"),
+              label_color = "white")
+
+pms_only_core_diagram
 ```
 
 # Perform indicator species analysis
@@ -112,6 +121,12 @@ isa_output = multipatt(t(otu_table(phyloseq_object)),
 statistics = as.data.frame(isa_output$sign)
 
 summary(isa_output, indvalcomp = TRUE)
+
+write.csv(statistics, 'isa_table.csv')
+
+isa_filtered = filter(statistics, stat > 0.5 & p.value < 0.05)
+
+dim(isa_filtered)
 ```
 
 
