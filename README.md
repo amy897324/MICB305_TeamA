@@ -7,6 +7,9 @@
 - potentially look over aims further
 - questions about oral presentation
 
+## Meeting Notes
+
+
 # Nov 19
 
 ## Agenda
