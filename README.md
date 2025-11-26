@@ -60,11 +60,11 @@ Presentation
         - Send abs file path of input
         - Email if needed
    - Presentation slides
-        - Raavin = alpha and beta
-        - Emilia = conclusion
-        - Gerard = core microbiome
         - Amy = Intro
-
+        - Raavin = alpha and beta
+        - Gerard = core microbiome
+        - Emilia = conclusion
+          
 # Nov 19
 
 ## Agenda
