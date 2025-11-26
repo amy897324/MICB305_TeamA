@@ -130,9 +130,9 @@ write.csv(isa_filtered, "isa_filtered.csv")
 
 dim(isa_filtered)
 
-# Plot the two taxa that are indicators for the gut
+# Plot the taxa that are indicators
 
-df_of_taxa = prune_taxa(isa_filtered) %>% psmelt()
+df_of_taxa = prune_taxa(pyloseq_object, isa_filtered) %>% psmelt()
 
 df_of_taxa %>% 
   ggplot(aes(body.site,Abundance,fill=body.site)) +
