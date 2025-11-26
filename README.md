@@ -1,5 +1,15 @@
 # MICB305_TeamA
 
+# Nov 26
+
+## Agenda
+- go over presentation slides
+- potentially look over aims further
+- questions about oral presentation
+
+## Meeting Notes
+
+
 # Nov 19
 
 ## Agenda
@@ -7,6 +17,26 @@
 - possibly go over fixed revisions.
 
 ## Meeting Notes
+Aim 1
+For beta: Weight, unweighted, and 
+Alpha: do shannon as well, and observed 
+Dunn test
+
+Aim 2 
+This graph with only PMS, control, control_depression, pms_depression 
+RMS as separate graph
+Only 4 at a time
+For ANCOM pairwise comparison should be between PMS-depression and PMS–no depression
+
+Github
+Agenda and meeting notes
+
+Presentation 
+10mins present project
+Just need data
+Make draft powerpoint of what you have so far by next meeting
+Then will be ready to write up manuscript
+Upload all scripts and figures to github
 
 # Nov 12
 

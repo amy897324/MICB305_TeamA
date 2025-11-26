@@ -141,3 +141,52 @@ df_of_taxa %>%
   geom_jitter(height=0, width=0.2) +
   facet_wrap(~Phylum, ncol = 4, scales = 'free')
 ```
+
+
+Ancomb2
+```{r}
+
+ps_ancomb2 <- ps 
+
+
+grouped_data <- data.frame(ps_ancomb2@sam_data) %>%
+  mutate(group = case_when(
+    disease_type == "RRMS" & depression == 0 ~ "RRMS",
+    disease_type == "RRMS" & depression == 1 ~ "RRMS Depression",
+    disease_type == "PMS" & depression == 0 ~ "PMS",
+    disease_type == "PMS" & depression == 1 ~ "PMS Depression",
+    disease_type == "Control" & depression == 0 ~ "Control",
+    disease_type == "Control" & depression == 1 ~ "Control Depression"))
+
+ps_ancomb2@sam_data <- sample_data(grouped_data)
+
+species_glom <- tax_glom(ps_ancomb2, 'Species')
+
+data2 <- species_glom@sam_data
+
+out <- ancombc2(data = species_glom,
+                fix_formula = 'group',
+                p_adj_method = 'BH',
+                prv_cut = 0.1)
+statistical_table = out$res
+
+filtered_stat <- statistical_table |>
+  filter(`diff_robust_groupControl Depression` == "TRUE" |
+                `diff_robust_groupPMS` == "TRUE" |
+`diff_robust_groupPMS Depression` == "TRUE" |
+ `diff_robust_groupRRMS` == "TRUE" |
+`diff_robust_groupRRMS Depression` == "TRUE")  
+
+filtered_stat |>
+  ggplot(aes(taxon, lfc_groupPMS, fill = taxon)) + 
+  geom_col() +
+coord_flip() +
+  ggtitle("Significant Differences in Abundance for Species in PMS") +
+  labs(x = "Bacterial Species", y = "Bacterial Abundance")
+
+print()
+          
+  
+                
+```
+
