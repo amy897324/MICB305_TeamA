@@ -126,14 +126,13 @@ write.csv(statistics, 'isa_table.csv')
 
 isa_filtered = filter(statistics, stat > 0.5 & p.value < 0.05)
 
+write.csv(isa_filtered, "isa_filtered.csv")
+
 dim(isa_filtered)
 
 # Plot the two taxa that are indicators for the gut
-species_to_plot = indval_table %>% 
-  filter(s.gut==1 & s.tongue==0 & `s.left palm`==0 & `s.right palm`==0 ) %>% 
-  rownames()
 
-df_of_taxa = prune_taxa(phyla_to_plot, ps_filt) %>% psmelt()
+df_of_taxa = prune_taxa(isa_filtered) %>% psmelt()
 
 df_of_taxa %>% 
   ggplot(aes(body.site,Abundance,fill=body.site)) +
@@ -142,8 +141,8 @@ df_of_taxa %>%
   facet_wrap(~Phylum, ncol = 4, scales = 'free')
 ```
 
-
 Ancomb2
+
 ```{r}
 
 ps_ancomb2 <- ps 
@@ -189,4 +188,3 @@ print()
   
                 
 ```
-
