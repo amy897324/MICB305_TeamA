@@ -1,5 +1,15 @@
 # MICB305_TeamA
 
+# Dec 3
+
+## Agenda
+- see if functional analysis should be included
+- ask about manuscript structure
+- any new updates on presentation slides
+- final thoughts
+
+## Meeting Notes
+
 # Nov 26
 
 ## Agenda
@@ -8,8 +18,53 @@
 - questions about oral presentation
 
 ## Meeting Notes
-
-
+Presentation
+   - Change title after finding last conclusions
+   - Define what “MS” means first
+        - Same for RRMS and PMS
+   - Good amount of graphics and text
+   - “Why is this important”
+        - Good to include
+        - Can be a single point on previous slide
+   - Use more informative visuals
+   - Start with dataset slide before breakdown of 6 groups
+   - Don’t need a figure for every slide
+        - Can be a continuation of previous ones
+   - No need to talk about conclusions right away
+        - Basically the title of the study
+        - Put alpha and beta together
+        - Ok to keep
+   - “Alpha diversity analysis revealed…”
+        - Revise to a more concise title
+        - Remove the points, just show plot
+            - Already shown as y-axis
+            - Don’t include legend
+        - Dont show shannon and simpson and pick one of chao or observed 
+            - And do brief summary (“it shows it was reduced…”)
+            - Make graph wider for remaining 2
+        - Make boxplots the same color for RRMS/PMS
+   - But for manuscript show all 4 figures
+   - “Beta diversity analysis revealed…”
+        - Not every comparison is relevant
+        - Figure 2 on manuscript panel a and b
+   - Core microbiome
+        - Figure 3 do two panels
+   - Omit indicator species
+        - Don’t include on manuscript
+        - Filter for pms, then depression and not
+   - “In ancom-bc2 analysis…”
+        - Get rid of slide
+        - Filter so just run with depression and not
+   - For functional analysis
+        - Filter for only PMS and compare between depression and no depression
+        - Send abs file path of input
+        - Email if needed
+   - Presentation slides
+        - Amy = Intro
+        - Raavin = alpha and beta
+        - Gerard = core microbiome
+        - Emilia = conclusion
+          
 # Nov 19
 
 ## Agenda
