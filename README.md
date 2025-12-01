@@ -6,6 +6,7 @@
 - see if functional analysis should be included
 - ask about manuscript structure
 - any new updates on presentation slides
+- ask about appropriate presentation title with the conclusions we have so far
 - final thoughts
 
 ## Meeting Notes
