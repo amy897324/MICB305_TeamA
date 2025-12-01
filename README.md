@@ -10,6 +10,8 @@
 - final thoughts
 
 ## Meeting Notes
+- presentation slide
+https://docs.google.com/presentation/d/16Ysp2gwefIzp3W6gm6au3x01P8QAdGfXzfZljzrcgrg/edit?usp=sharing
 
 # Nov 26
 
