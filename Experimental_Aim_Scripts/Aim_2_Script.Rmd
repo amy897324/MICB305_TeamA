@@ -110,7 +110,9 @@ grouped_data <- data.frame(phyloseq_object@sam_data) %>%
     disease_type == "PMS" & depression == 0 ~ "PMS",
     disease_type == "PMS" & depression == 1 ~ "PMS Depression",
     disease_type == "Control" & depression == 0 ~ "Control",
-    disease_type == "Control" & depression == 1 ~ "Control Depression"))
+    disease_type == "Control" & depression == 1 ~ "Control Depression")) 
+
+
 
 phyloseq_object@sam_data <- sample_data(grouped_data)
 
@@ -155,7 +157,8 @@ grouped_data <- data.frame(ps_ancomb2@sam_data) %>%
     disease_type == "PMS" & depression == 0 ~ "PMS",
     disease_type == "PMS" & depression == 1 ~ "PMS Depression",
     disease_type == "Control" & depression == 0 ~ "Control",
-    disease_type == "Control" & depression == 1 ~ "Control Depression"))
+    disease_type == "Control" & depression == 1 ~ "Control Depression")) |>
+  filter(group == "PMS" | group == "PMS Depression")
 
 ps_ancomb2@sam_data <- sample_data(grouped_data)
 
@@ -170,20 +173,17 @@ out <- ancombc2(data = species_glom,
 statistical_table = out$res
 
 filtered_stat <- statistical_table |>
-  filter(`diff_robust_groupControl Depression` == "TRUE" |
-                `diff_robust_groupPMS` == "TRUE" |
-`diff_robust_groupPMS Depression` == "TRUE" |
- `diff_robust_groupRRMS` == "TRUE" |
-`diff_robust_groupRRMS Depression` == "TRUE")  
+  filter(`diff_robust_groupPMS Depression` == "TRUE" )
 
-filtered_stat |>
-  ggplot(aes(taxon, lfc_groupPMS, fill = taxon)) + 
-  geom_col() +
-coord_flip() +
-  ggtitle("Significant Differences in Abundance for Species in PMS") +
-  labs(x = "Bacterial Species", y = "Bacterial Abundance")
 
-print()
+#filtered_stat |>
+#  ggplot(aes(taxon, lfc_groupPMS, fill = taxon)) + 
+ # geom_col() +
+#coord_flip() +
+#  ggtitle("Significant Differences in Abundance for Species in PMS") +
+#  labs(x = "Bacterial Species", y = "Bacterial Abundance")
+
+#print()
           
   
                 
