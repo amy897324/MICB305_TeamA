@@ -13,37 +13,37 @@
 - presentation slide
 https://docs.google.com/presentation/d/16Ysp2gwefIzp3W6gm6au3x01P8QAdGfXzfZljzrcgrg/edit?usp=sharing
 - Intro
-      - Simplify diagram to what you want to avoid talking about
-      - Mention how many people are affected by MS and depression
-      - Up to you as for if you want to mention hypothesis or not
+        - Simplify diagram to what you want to avoid talking about
+        - Mention how many people are affected by MS and depression
+        - Up to you as for if you want to mention hypothesis or not
 - Past dataset
-      - No need to include citation
-            - In text citation is enough
-      - Diagram is okay to remove
+        - No need to include citation
+        - In text citation is enough
+        - Diagram is okay to remove
 - In 6 groups
-      - Rather, include a table that summarizes the dataset (i.e. amount of samples, MS (what type), depression etc)
-         - If so, no need to include the 3rd point about MS and depression
+        - Rather, include a table that summarizes the dataset (i.e. amount of samples, MS (what type), depression etc)
+              - If so, no need to include the 3rd point about MS and depression
 - “Conclusion”
-      - Conclusion slide should be at the end
+        - Conclusion slide should be at the end
 - Alpha diversity
-      - Title → state which group showed the significant groups
-      - Remove title on graph
-      - Lower p-value
+        - Title → state which group showed the significant groups
+        - Remove title on graph
+        - Lower p-value
 - Unifrac
-      - Again remove title on plot itself
+        - Again remove title on plot itself
 - Core microbiome
-      - Add captions
+        - Add captions
 - 2nd core microbiome
-      - No need to include
-      - Able to see everything from previous slide
+        - No need to include
+        - Able to see everything from previous slide
 - Ancom
-      - No need to include the “tool” (ancom) in title
-      - Try to explain a brief significance of the bacteria species
+        - No need to include the “tool” (ancom) in title
+        - Try to explain a brief significance of the bacteria species
 - Conclusion 
-      - What did u learn from each of those analyses
-      - Anything interesting about the taxa
-      - If people were to have their own take on our dataset, what would they do
-      - Depression severity 
+        - What did u learn from each of those analyses
+        - Anything interesting about the taxa
+        - If people were to have their own take on our dataset, what would they do
+        - Depression severity 
 
 # Nov 26
 
