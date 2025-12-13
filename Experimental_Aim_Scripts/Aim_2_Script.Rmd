@@ -157,8 +157,7 @@ grouped_data <- data.frame(ps_ancomb2@sam_data) %>%
     disease_type == "PMS" & depression == 0 ~ "PMS",
     disease_type == "PMS" & depression == 1 ~ "PMS Depression",
     disease_type == "Control" & depression == 0 ~ "Control",
-    disease_type == "Control" & depression == 1 ~ "Control Depression")) |>
-  filter(group == "PMS" | group == "PMS Depression")
+    disease_type == "Control" & depression == 1 ~ "Control Depression")) 
 
 ps_ancomb2@sam_data <- sample_data(grouped_data)
 
@@ -173,17 +172,29 @@ out <- ancombc2(data = species_glom,
 statistical_table = out$res
 
 filtered_stat <- statistical_table |>
-  filter(`diff_robust_groupPMS Depression` == "TRUE" )
+  filter(`diff_robust_groupPMS` == "TRUE" )
+
+tax_names <- data.frame(ps_ancomb2@tax_table) 
 
 
-#filtered_stat |>
-#  ggplot(aes(taxon, lfc_groupPMS, fill = taxon)) + 
- # geom_col() +
-#coord_flip() +
-#  ggtitle("Significant Differences in Abundance for Species in PMS") +
-#  labs(x = "Bacterial Species", y = "Bacterial Abundance")
+final_data <- filtered_stat |>
+  mutate(names = case_when(
+         taxon == "d52a0395431a1912fd52bda732cd2784" ~ "Varibaculum cambriense",
+         taxon == "a2149ca6e80cc8bb6b1abda0cce4631a" ~ "Blautia fusiformis"))
+          
 
-#print()
+
+
+
+
+final_data |>
+  ggplot(aes(names, lfc_groupPMS, fill = taxon)) + 
+  geom_col() +
+  coord_flip() +
+  ggtitle("Significant Differences in Abundance for Species in PMS") +
+  labs(x = "Bacterial Species", y = "Bacterial Abundance") |>
+
+print()
           
   
                 
