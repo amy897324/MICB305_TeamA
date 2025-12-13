@@ -51,7 +51,7 @@ ps <- phyloseq(
   sample_data(meta_data),
   otu_table(counts_formatted, taxa_are_rows = TRUE),
   tax_table(taxonomy_formatted),
-  tree
+  tree 
 )
 
 saveRDS(ps,'phyloseq_taxonomy.rds')
