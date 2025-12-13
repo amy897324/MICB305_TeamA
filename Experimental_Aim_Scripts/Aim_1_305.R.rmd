@@ -12,49 +12,6 @@ library(picante)
 library(FSA)
 library(ggpubr)
 library(kableExtra)
-
-```
-
-```{r}
-taxonomy <- read.delim("taxonomy.tsv", row.names = 1)
-tree <- read_tree("tree.nwk")
-counts <- read.delim("feature-table.tsv", skip = 1, row.names = 1)
-metadata <- read.delim("new_metadata.tsv", row.names = 1)
-
-
-taxonomy_formatted = taxonomy %>% 
-  separate(col = Taxon, 
-           into = c('Domain','Phylum','Class','Order',
-                    'Family','Genus','Species'),
-           sep=';', fill='right') %>% 
-  select(-Confidence) %>% 
-  as.matrix()
-
-counts_formatted = counts %>% as.matrix()
-colnames(counts_formatted) <- sub("^X", "", colnames(counts_formatted))
-colnames(counts_formatted) <- gsub("\\.", "-", colnames(counts_formatted))
-# removing AX and replacing . with - to match table 
-
-
-meta_data <- read.delim(
-  "new_metadata.tsv",
-  sep = "\t",
-  header = TRUE,
-  row.names = 1,
-  check.names = FALSE,
-  comment.char = ""
-)
-meta_data <- meta_data[colnames(counts_formatted), ]
-
-
-ps <- phyloseq(
-  sample_data(meta_data),
-  otu_table(counts_formatted, taxa_are_rows = TRUE),
-  tax_table(taxonomy_formatted),
-  tree 
-)
-
-saveRDS(ps,'phyloseq_taxonomy.rds')
 ```
 
 ```{r}
@@ -464,11 +421,4 @@ ggsave("Bray_plot.png", plot = plot_Bray, width = 7, height = 5, dpi = 300)
 
 ```
 
-```{r}
-group <- filter(meta_r, group6 == "PMS_NoDepression") |> 
-  select(group6)
-
-nrow(group)
-
-```
 
