@@ -1,5 +1,7 @@
-# Aim 1 Team A 
-## making the phyloseq 
+# Aim 1 Team A
+
+## making the phyloseq
+
 ```{r}
 library(phyloseq)
 library(tidyverse)
@@ -9,9 +11,9 @@ library(ggplot2)
 library(picante)
 library(FSA)
 library(ggpubr)
+library(kableExtra)
 
 ```
-
 
 ```{r}
 taxonomy <- read.delim("taxonomy.tsv", row.names = 1)
@@ -31,6 +33,7 @@ taxonomy_formatted = taxonomy %>%
 counts_formatted = counts %>% as.matrix()
 colnames(counts_formatted) <- sub("^X", "", colnames(counts_formatted))
 colnames(counts_formatted) <- gsub("\\.", "-", colnames(counts_formatted))
+# removing AX and replacing . with - to match table 
 
 
 meta_data <- read.delim(
@@ -58,9 +61,10 @@ saveRDS(ps,'phyloseq_taxonomy.rds')
 ps <- readRDS("../phyloseq_taxonomy.rds")
 ```
 
+## starting with alpha diversity analysis
 
-## starting with alpha diversity analysis 
 ### splitting data
+
 ```{r}
 set.seed(421)
 psrare = ps %>% rarefy_even_depth(sample.size = 7000, rngseed = 421)
@@ -93,7 +97,9 @@ meta_r$group6 <- factor(
 
 sample_data(psrare) <- sample_data(meta_r) # adding this new metadata back to our phyloseq
 ```
+
 ### running faiths
+
 ```{r}
 psrare_noNA <- subset_samples(psrare, !is.na(group6))
 psrare_noNA <- prune_samples(sample_sums(psrare_noNA) > 0, psrare_noNA) # removes NA and empties
@@ -105,7 +111,7 @@ if (taxa_are_rows(psrare_noNA)) {
 tree_pd <- phy_tree(psrare_noNA) # extracting tree 
 faith_pd <- pd(otu_mat, tree_pd, include.root = TRUE) # calculating faiths 
 meta_r <- data.frame(sample_data(psrare_noNA))
-meta_r <- meta_r[rownames(faith_pd), , drop = FALSE]
+meta_r <- meta_r[rownames(faith_pd), , drop = FALSE] # making sure metadata and faiths match 
 
 faith_df <- data.frame(
   sample  = rownames(faith_pd),
@@ -113,11 +119,12 @@ faith_df <- data.frame(
   group6  = meta_r$group6
 ) # build final clean table for plotting 
 ```
+
 ### making faiths plot
+
 ```{r}
 faiths_plot <- ggplot(faith_df, aes(x = group6, y = FaithPD, color = group6)) +
-  geom_boxplot(outlier.shape = NA) +          # boxplot without showing outlier duplicates
-  geom_jitter(width = 0.2, size = 2, alpha = 0.7) +   
+  geom_boxplot(outlier.shape = NA) +        
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   ylab("Faith's Phylogenetic Diversity") +
@@ -128,7 +135,9 @@ faiths_plot <- ggplot(faith_df, aes(x = group6, y = FaithPD, color = group6)) +
 faiths_plot
 
 ```
+
 ### making shannon/observed plot
+
 ```{r}
 set.seed(421)
 p = plot_richness(psrare_noNA, x = 'group6', 
@@ -138,53 +147,53 @@ p = plot_richness(psrare_noNA, x = 'group6',
 pdata = p$data
 str(pdata)
 
-p_alpha <- pdata %>% 
-  ggplot(aes(x = group6, y = value, fill = group6)) +
-  geom_boxplot(outlier.shape = NA, width = 0.6, alpha = 0.7, colour = "black") +
-  geom_jitter(aes(colour = group6),
-              width = 0.2, height = 0,
-              size = 1.8, alpha = 0.6) +
-    theme_classic(base_size = 18) +
-  facet_wrap(~variable, ncol = 4, scales = "free_y") +
-  ylab("Alpha Diversity") + 
+p_alpha <- ggplot(pdata,
+                  aes(x = group6, y = value, fill = group6)) +
+  geom_boxplot(outlier.shape = NA,
+               width = 0.6,
+               alpha = 0.7,
+               colour = "black") +
+  facet_wrap(~ variable, ncol = 4, scales = "free_y") +
+  ylab("Alpha Diversity") +
   xlab(NULL) +
-  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-  labs(fill = "Group", colour = "Group", title = "Alpha Diversity Measures Across MS / Depression Groups") +
- scale_fill_brewer(palette = "Set2") +
-  scale_colour_brewer(palette = "Set2")
+  theme_classic(base_size = 18) +
+  theme(
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1),
+    legend.position = "none"
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "Alpha Diversity Measures Across MS / Depression Groups")
 
 p_alpha
 ```
+
 ### calculating significance for alpha diversity values
+
 ```{r}
 
-set.seed(421)
-
-run_dunn <- function(df, metric, value_col = "value") {
-  tmp <- df
-
-  res <- dunnTest(as.formula(paste0(value_col, " ~ group6")),
-                  data = tmp, method = "bh")$res # this just shows that you are running the Dunn test based on this formula, res extracts the results
-
-  res <- as.data.frame(res)
-  assign(paste0("Dunn_", metric), res, envir = .GlobalEnv)
+run_dunn <- function(df, value_col = "value") {
+  
+  formula_obj <- as.formula(paste0(value_col, " ~ group6"))
+  
+  res <- dunnTest(formula_obj, data = df, method = "bh")$res %>%
+    as.data.frame() # tells us to run dunn_test on the data frame we are gonna make 
   
   sig <- res %>% filter(P.adj < 0.05)
-  assign(paste0("Dunn_", metric, "_sig"), sig, envir = .GlobalEnv) # creates only a significant table
   
-  return(list(all = res, sig = sig)) # this function we made returns everything 
-} # making a helper function to make sure everything saves in a dataframe
+  # return both significant and non significant parts 
+  list(all = res, sig = sig)
+}
 
-metrics <- c("Observed", "Shannon", "Chao1", "Simpson")
-
-Dunn_results <- list()
+metrics <- c("Observed")          
+Dunn_results <- list() # empty list like a file cabinet
 
 for (m in metrics) {
-  cat("\nRunning Dunn test for", m, "...\n")
-  df_m <- subset(pdata, variable == m)
-  Dunn_results[[m]] <- run_dunn(df_m, m)
-} # doing dunn test for values using the function we made above so that it saves how we like
+  df_substitute <- subset(pdata, variable == m) # m is basically a place holder for metrics 
+  
+  Dunn_results[[m]] <- run_dunn(df_m, value_col = "value")
+} # this basically goes into our file cabinent each in different sections for the metric(m) it runs in the loop, and makes a loop so we dont have to run this fnx many times for each metric
 
+# value is just used because it is the numeric col with the diversity data
 Dunn_FaithPD <- dunnTest(FaithPD ~ group6, data = faith_df, method = "bh")$res
 Dunn_FaithPD_sig <- Dunn_FaithPD %>% filter(P.adj < 0.05) # doing dunn test for faiths
 
@@ -203,8 +212,11 @@ all_sig <- bind_rows(
 assign("Dunn_All_Significant", all_sig, envir = .GlobalEnv)
 rm(all_sig) # just wanted a better name
 ```
-This tells us that overall, only 2 groups had significant differences in alpha diversity metrics
-## annotating the original graph to show these differences 
+
+This tells us that overall, only 2 groups had significant differences in alpha diversity metrics 
+
+## annotating the original graph to show these differences
+
 ```{r}
 p_obs <- Dunn_Observed_sig$P.adj
 
@@ -227,20 +239,25 @@ sig_df <- data.frame(
 ) 
 sig_df$label <- paste0("p = ", signif(sig_df$p.adj, 3)) # table describing significant annotations 
 
-p_formatted_alpha_annot <- p_formatted +
+p_alpha_annot <- p_alpha +
   stat_pvalue_manual(
     sig_df,
-    label = "label",       
-    tip.length = 0.01,
+    label        = "label",  
+    tip.length   = 0.01,
     bracket.size = 0.5,
-    hide.ns = FALSE       
+    hide.ns      = TRUE     
   )
 
-p_formatted_alpha_annot
+p_alpha_annot
+
+# Make the Observed-only boxplot (no dots, 3 colours, no legend)
 ```
-Overall, not too many significant differences for alpha diversity metrics, but it seems like PMS depression vs PMS no depression indicate significant differences. 
-## Running the beta diversity metrics 
-### organization
+
+
+Overall, not too many significant differences for alpha diversity metrics, but it seems like PMS depression vs PMS no depression indicate significant differences.
+
+##Doing beta diversity analysis
+
 ```{r}
 meta <- data.frame(sample_data(psrare_noNA))
 
@@ -248,7 +265,9 @@ bray <- distance(psrare_noNA, method = "bray")
 unwUF<- UniFrac(psrare_noNA, weighted = FALSE, normalized = TRUE)
 wUF <- UniFrac(psrare_noNA, weighted = TRUE,  normalized = TRUE)
 ```
+
 ### running permanova
+
 ```{r}
 adonis_unw <- adonis2(unwUF ~ group6,
                       data = meta,
@@ -263,43 +282,50 @@ adonis_unw
 adonis_w
 adonis_bray
 ```
+
 The results here show us each test reveals significance, we will now run pairwise
+
 ### Pairwise Permanova
+
 ```{r}
 pairwise_permanova <- function(dist_matrix, groups, nperm = 999) {
-  require(vegan)
+  # 999 is optimal permutations, dist_matrix/groups is place holder 
 
-  groups <- as.factor(groups)
-  combos <- combn(levels(groups), 2)
+  groups <- as.factor(groups) # the group you add is factor
+  combos <- combn(levels(groups), 2) # comparing 2 groups, and all comparisons
   
   results <- data.frame(
     group1 = combos[1, ],
     group2 = combos[2, ],
     R2 = NA,
     p = NA
-  )
+  ) # this is how the final results will look with R2 being the distance 
 
   for (i in seq_len(ncol(combos))) {
     g1 <- combos[1, i]
     g2 <- combos[2, i]
+    # i is loop counter
+    # this is extracting group names for the comparison for later 
+    # seq_len basically just ensuring all the comparisons are done from 1-x
 
-    # subset samples to these two groups
-    idx <- groups %in% c(g1, g2)
-    sub_dist <- dist_matrix[idx, idx]
-    sub_groups <- groups[idx]
+    x <- groups %in% c(g1, g2) # selects only the samples you want to compare
+    sub_dist <- dist_matrix[x, x] # distance matrix for those groups
+    sub_groups <- groups[x] # names for those groups 
 
     # run permanova
-    ad <- adonis2(sub_dist ~ sub_groups, permutations = nperm)
+    adonis_results <- adonis2(sub_dist ~ sub_groups, permutations = nperm)
     
-    results$R2[i] <- ad$R2[1]
-    results$p[i]  <- ad$`Pr(>F)`[1]
+    results$R2[i] <- adonis_results$R2[1]
+    results$p[i]  <- adonis_results$`Pr(>F)`[1] # Probability of observing an F-statistic this large or larger if there is no true difference between groups, the whole thing we learned in 205
   }
 
   results$p.adj <- p.adjust(results$p, method = "BH")
   return(results)
 } # creating a permanova helper function since pairwiseAdonis doesnt exist on my R
 ```
+
 ### Making our tables
+
 ```{r}
 pw_bray <- pairwise_permanova(as.matrix(bray), meta$group6)
 
@@ -324,31 +350,54 @@ pairwise_sig <- pairwise_all %>%
   arrange(Metric, p.adj) 
 
 pairwise_sig
+
+
+```
+```{r}
+# creating an exportable table 
+
+pairwise_table <- pairwise_sig %>%
+  kbl() %>% 
+  kable_classic(full_width = FALSE)
+
+pairwise_table
+
 ```
 
 ### Plotting unweighted
+
 ```{r}
-ord_unw <- ordinate(psrare_noNA, method = "PCoA", distance = unifrac_unw)
+ord_unw <- ordinate(psrare_noNA, method = "PCoA", distance = unwUF)
 # ordination of the phyloseq to allow for visualization of the matrix, meathod is PCoA
 
-p_unw <- plot_ordination(psrare_noNA, ord_unw,
-                         color = "group6") +
+p_unw <- plot_ordination(psrare_noNA, ord_unw, color = "group6") +
   geom_point(size = 2, alpha = 0.7) +
   stat_ellipse(size = 1) +
   scale_color_brewer(palette = "Set2", name = "Group") +
   theme_classic(base_size = 18) +
-  ggtitle("PCoA – Unweighted UniFrac") +
-  annotate("text",
-           x = min(ord_unw$vectors[,1]) + 0.02,
-           y = max(ord_unw$vectors[,2]) - 0.02,
-           label = paste0("PERMANOVA (UnwUF): p = ", signif(adonis_unw$`Pr(>F)`[1], 3)),
-           size = 6)
+  ggtitle("PCoA – Unweighted UniFrac") 
+
+p_unw <- p_unw +
+  coord_cartesian(clip = "off") +
+  annotate(
+    "text",
+    x = -Inf, y = Inf,             # top-left corner
+    hjust = -0.1, vjust = 1.1,
+    label = paste0("PERMANOVA (UnwUF): p = ",
+                   signif(adonis_unw$`Pr(>F)`[1], 3)),
+    size = 6
+  )
+
 p_unw
 ```
+
+
+
 ### Plotting weighted
+
 ```{r}
 
-ord_w <- ordinate(psrare_noNA, method = "PCoA", distance = unifrac_w)
+ord_w <- ordinate(psrare_noNA, method = "PCoA", distance = wUF)
 
 p_w <- plot_ordination(psrare_noNA, ord_w,
                        color = "group6") +
@@ -356,32 +405,70 @@ p_w <- plot_ordination(psrare_noNA, ord_w,
   stat_ellipse(size = 1) +
   scale_color_brewer(palette = "Set2", name = "Group") +
   theme_classic(base_size = 18) +
-  ggtitle("PCoA – Weighted UniFrac") +
-   annotate("text",
-           x = min(ord_w$vectors[,1]) + 0.02,
-           y = max(ord_w$vectors[,2]) - 0.02,
-           label = paste0("PERMANOVA (Bray): p = ", signif(adonis_w$`Pr(>F)`[1], 3)),
-           size = 6)
+  ggtitle("PCoA – Weighted UniFrac")
+
+p_w <- p_w +
+  coord_cartesian(clip = "off") +
+  annotate(
+    "text",
+    x = -Inf, y = Inf,             # top-left corner
+    hjust = -0.1, vjust = 1.1,
+    label = paste0("PERMANOVA (WUF): p = ",
+                   signif(adonis_unw$`Pr(>F)`[1], 3)),
+    size = 6
+  )
 
 p_w
 ```
+
 ### Plotting Bray
+
 ```{r}
 # Plot it
 ord_bray <- ordinate(psrare_noNA, method = "PCoA", distance = "bray")
 
-plot_Bray <- plot_ordination(psrare_noNA, ord_bray, color = "group6") +
+plot_bray <- plot_ordination(psrare_noNA, ord_bray, color = "group6") +
   geom_point(size = 2, alpha = 0.7) +
   stat_ellipse(size = 1) +
   scale_color_brewer(palette = "Set2", name = "Group") +
   theme_classic(base_size = 18) +
-  ggtitle("PCoA – Bray–Curtis Dissimilarity") +
-    annotate("text",
-           x = min(ord_bray$vectors[,1]) + 0.02,
-           y = max(ord_bray$vectors[,2]) - 0.02,
-           label = paste0("PERMANOVA (Bray): p = ", signif(adon_bray$`Pr(>F)`[1], 3)),
-           size = 6)
+  ggtitle("PCoA – Bray–Curtis Dissimilarity")
 
-plot_Bray
+plot_bray <- plot_bray +
+  coord_cartesian(clip = "off") +
+  annotate(
+    "text",
+    x = -Inf, y = Inf,           # top-left corner
+    hjust = -0.1, vjust = 1.1,
+    label = paste0("PERMANOVA (Bray): p = ",
+                   signif(adonis_bray$`Pr(>F)`[1], 3)),
+    size = 6
+  )
+
+plot_bray
+
+plot_bray
 ```
-Overall, each of the beta diversity metrics had a significant global p value, but only Bray and unweighted had significant pairwise differences between groups. 
+
+Overall, each of the beta diversity metrics had a significant global p value, but only Bray and unweighted had significant pairwise differences between groups.
+
+```{r}
+ggsave("Faiths_plot.png", plot = faiths_plot, width = 7, height = 5, dpi = 300)
+ggsave("Alpha_plot.png", plot = p_formatted_alpha_annot, width = 7, height = 5, dpi = 300)
+ggsave("Unw_plot.png", plot = p_unw, width = 7, height = 5, dpi = 300)
+ggsave("W_plot.png", plot = p_w, width = 7, height = 5, dpi = 300)
+ggsave("Bray_plot.png", plot = plot_Bray, width = 7, height = 5, dpi = 300)
+
+
+
+
+```
+
+```{r}
+group <- filter(meta_r, group6 == "PMS_NoDepression") |> 
+  select(group6)
+
+nrow(group)
+
+```
+
