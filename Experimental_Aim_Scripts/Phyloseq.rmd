@@ -117,10 +117,5 @@ faiths_plot <- ggplot(faith_df, aes(x = group6, y = FaithPD, color = group6)) +
 
 faiths_plot
 
-# questions: How to run both weighted unifrac and Bray-Curtis? Am I ruinning permanova and kruskil on both or one? 
-```
-## Running the beta diversity metrics 
-```{r}
-
 ```
 
